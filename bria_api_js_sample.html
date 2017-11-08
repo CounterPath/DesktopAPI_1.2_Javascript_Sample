@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<META charset="UTF-8"> 
+		<script src="jquery-3.2.1.slim.js" type="text/javascript"></script>
+		<script src="bria_api_constants.js" type="text/javascript"></script>
+		<script src="bria_api_js_sample.js" type="text/javascript"></script>
+	</HEAD>
+	<BODY>
+		<h1> Bria API JavaScript Sample </h1>
+		<div>
+			<div style="width:1315px">    
+				<fieldset>
+					<legend> WebSocket Connection Status </legend>
+					<div id="ConnectionStatusText">DISCONNECTED</div>
+				</fieldset>
+			</div>
+
+			<br/>
+			
+			<div style="width:100%">     
+				<div id="Column1" style="padding-top:0px; margin-top:0px; float:left; width:388px;">
+					<fieldset>
+						<legend> Simple Commands </legend>
+						<button onclick="bringToFront(); return true;"> BRING TO FRONT </button>
+					</fieldset>
+					<br/>
+					<fieldset>
+						<legend> Place a call </legend>
+						<label for="CallTargetTextInput">Enter number:</label>
+						<input style="width:200px" type="text" id="CallTargetTextInput"/>
+						<button onclick="placeCall(); return true;"> CALL </button>
+						<br/>
+						<input type="checkbox" id="SuppressMainWindowCheckbox"/>
+						<label for="SuppressMainWindowCheckbox">Keep Bria Window from popping up</label>
+					</fieldset>
+					<br/>
+					<fieldset>
+						<legend> Instant Messaging </legend>
+						<label for="IMAddressTextInput">Enter IM address:</label>
+						<input style="width:200px" type="text" id="IMAddressTextInput"/>
+						<br/>
+						<input type="radio" name="IMAddressType" value="SIP" checked>SIP URI
+						<input type="radio" name="IMAddressType" value="XMPP">XMPP JID
+						<br/>
+						<button onclick="sendIM(); return true;"> Send IM </button>
+					</fieldset>
+					<br/>					
+					<fieldset>
+						<legend> Screen-sharing </legend>
+						<label for="ScreenShareAddressTextInput">Enter address(es):</label>
+						<input style="width:200px" type="text" id="ScreenShareAddressTextInput"/>
+						<br/>
+						<input type="radio" name="ScreenShareAddressType" value="SIP" checked>SIP URI
+						<input type="radio" name="ScreenShareAddressType" value="XMPP">XMPP JID
+						<br/>
+						<button id="StartScreenShareButton" onclick="startScreenSharing(); return true;"> Start </button>
+						<div id="ScreenshareStatusDiv" style="padding-top:4px; margin-top:4px;">
+						  <br/>
+						</div>
+					</fieldset>
+					<br/>					
+				</div>
+					
+				<div id="Column2" style="padding-top:0px; margin-top:0px; float:left; width:335px;">
+					<fieldset style="height:460px">
+						<legend> Current Calls </legend>
+						
+						<div id="CallActivityDiv" style="padding-top:0px; margin-top:0px;">
+						  <br/>
+						</div>
+					
+					</fieldset>
+					<br/>
+				</div>	
+				
+				<div id="Column3" style="padding-top:0px; margin-top:0px; float:left; width:595px;">
+					<fieldset style="height:460px">
+						<legend> Last 15 Call History entries </legend>
+						
+						<div id="CallHistoryDiv" style="padding-top:0px; margin-top:0px;">
+						  <br/>
+						</div>						
+						
+					</fieldset>
+					<br/>
+				</div>			
+			</div>
+					
+			<br/>		
+					
+			<!-- API Message Logging Output -->
+			<div style="padding-top:0px; margin-top:0px; ">
+				<div>
+					<label style="float:left; width:1228px">API Message Log</label>
+					<button style="float:left;" onclick="clearLog()"> CLEAR LOG </button>
+				</div>
+				
+				<textarea readonly id="APIMessageLog"  cols="166" rows="15"></textarea>	
+			</div>
+		</div>
+
+	</BODY>
+</HTML>
