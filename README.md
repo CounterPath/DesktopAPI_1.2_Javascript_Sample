@@ -8,3 +8,6 @@ CounterPath is now encouraging third-party-application developers to integrate t
 This project provides sample and convenient wrapper code to utilize this API. *Note* you need a Bria desktop (Version 5.0 or higher, 5.3+ recommended) application to utilize the API.
 
 This code is provided wihtout support.  We welcome user contributions and comments.  Should you have any issues or questions, create an issue in the project and we respond on a best efforts basis.    
+
+The Bria 5 Desktop API Guide is available at:
+https://www.counterpath.com/resources/bria-desktop-api 
