@@ -1,8 +1,5 @@
 # DesktopAPISample
 
-Desktop_API_URLpop
-
-
 
 > Update Sept 24th, 2020:
 
