@@ -59,11 +59,28 @@
 						  <br/>
 						</div>
 					</fieldset>
-					<br/>					
+					<br/>	
+					<fieldset>
+						<legend> Login/Logout </legend>
+						<button id="LoginButton" onclick="login(); return true;"> Login </button>
+						<div style="float: right">
+							<label for="UsernameTextInput">Username:</label>
+							<input style="width:200px" type="text" id="UsernameTextInput"/>
+					    	<br/>
+							<label for="PasswordTextInput">Password:</label>
+							<input type="password" style="width:200px" type="text" id="PasswordTextInput"/>
+						</div>
+						<br/>
+				    	<div style="float: left">
+						   <button id="LogoutButton" onclick="logout(); return true;"> Logout </button>
+						   <button id="ExitButton" onclick="exit(); return true;"> Exit </button>	
+					    </div>
+					</fieldset>
+					<br/>	
 				</div>
 					
 				<div id="Column2" style="padding-top:0px; margin-top:0px; float:left; width:335px;">
-					<fieldset style="height:460px">
+					<fieldset style="height:526px">
 						<legend> Current Calls </legend>
 						
 						<div id="CallActivityDiv" style="padding-top:0px; margin-top:0px;">
@@ -75,7 +92,7 @@
 				</div>	
 				
 				<div id="Column3" style="padding-top:0px; margin-top:0px; float:left; width:595px;">
-					<fieldset style="height:460px">
+					<fieldset style="height:526px">
 						<legend> Last 15 Call History entries </legend>
 						
 						<div id="CallHistoryDiv" style="padding-top:0px; margin-top:0px;">

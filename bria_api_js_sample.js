@@ -26,6 +26,8 @@ function initialize() {
 function onConnectedToWebSocket() {
 	/* Do some stuff here when the connection is first established ... */
 	
+	apiGetStatus(ApiStatusEventTypes.properties[ApiStatusEventTypes.AUTHENTICATION].text);
+
 	/* Request CALL status to sync the list of active calls */
 	apiGetStatus(ApiStatusEventTypes.properties[ApiStatusEventTypes.CALL].text);
 	
@@ -123,6 +125,21 @@ function startScreenSharing() {
 	if (typeSelect == 'SIP') type='simple'; else type='xmpp';
 	
 	apiStartScreenShare(targets, type);
+}
+
+function login() {
+	var username = jq('#UsernameTextInput').val();
+	var password = jq('#PasswordTextInput').val();
+
+	apiSignIn(username, password);
+}
+
+function logout() {
+	apiSignOut();
+}
+
+function exit() {
+	apiExit();
 }
 	
 /****************************************************************************
@@ -227,6 +244,23 @@ function apiGetStatusWithParameters(statusType, parameterXML) {
 	sendMessage(msg);	
 }
 
+function apiSignIn(username, password) {
+	var content = xmlDeclarationString + '<signIn>\r\n <user>' + username + '</user>\r\n <password>' + password + '</password>\r\n</signIn>';
+	var msg = constructApiMessage(ApiRequestTypes.SIGNIN, content);
+	sendMessage(msg);
+}
+
+function apiSignOut() {
+	var msg = constructApiMessage(ApiRequestTypes.SIGNOUT, '');
+	sendMessage(msg);
+} 
+
+function apiExit() {
+	var msg = constructApiMessage(ApiRequestTypes.EXIT, '');
+	sendMessage(msg);
+} 
+
+
 
 /****************************************************************************
                           BRIA API EVENT HANDLING
@@ -258,6 +292,7 @@ function handleStatusChangeEvent(eventType) {
 	/* Process events that we care about, ignore the rest */
 	
 	switch (eventType) {
+		case ApiStatusEventTypes.properties[ApiStatusEventTypes.AUTHENTICATION].text:
 		case ApiStatusEventTypes.properties[ApiStatusEventTypes.CALL].text:
 		case ApiStatusEventTypes.properties[ApiStatusEventTypes.SCREENSHARE].text:
 			/* Received a simple status event - request details with Get Status without parameters */
@@ -375,6 +410,27 @@ function handleScreenShareStatusResponse(screenShareStatusDoc) {
 	jq('#ScreenshareStatusDiv').html(html);
 }
  
+function handleAuthenticationStatusResponse(authenticationStatusDoc) {
+
+	var authenticated = getStringValueFromXMLTag(authenticationStatusDoc, 'authenticated');
+	console.log('Logged in: ' + authenticated);
+	
+	if (authenticated == 'true') {
+		/* Client is logged in */
+		updateLoginSection(true);
+
+	} else {
+		/* Client is logged out */
+		var failedReason = getStringValueFromXMLTag(authenticationStatusDoc, 'notAuthenticatedReason');
+		var serverReason = getStringValueFromXMLTag(authenticationStatusDoc, 'serverProvidedReason');
+
+		console.log('Client logged out due to: ' + failedReason);
+		console.log('Server provided reason: ' + serverReason);
+
+		updateLoginSection(false);
+	}
+}
+
 /****************************************************************************
                           BRIA API MESSAGE HANDLING
  ****************************************************************************/
@@ -433,6 +489,10 @@ function processResponse(responseXML) {
 				case ApiStatusEventTypes.properties[ApiStatusEventTypes.SCREENSHARE].text:
 					handleScreenShareStatusResponse	(xmlDoc);
 					break;
+				case ApiStatusEventTypes.properties[ApiStatusEventTypes.AUTHENTICATION].text:
+					handleAuthenticationStatusResponse(xmlDoc);
+					break;
+
 				default:
 					console.log('Unknown Response type: ' + responseXML);
 					break;
@@ -623,6 +683,12 @@ function updateCallActivity(callList) {
 	
 	jq('#CallActivityDiv').html(html);
 }
+
+function updateLoginSection(loggedIn) {
+	jq('#LoginButton').prop("disabled", loggedIn);
+	jq('#LogoutButton').prop("disabled", !(loggedIn));
+}
+
 
 /****************************************************************************
     EVERYTHING STARTS BY CALLING INITIALIZE WHEN THE PAGE IS DONE LOADING

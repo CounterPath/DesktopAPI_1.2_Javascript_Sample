@@ -28,6 +28,9 @@
 	SETPRESENCE:			16,
 	IM:						17,
 	STARTSCREENSHARE:		18,
+	SIGNOUT:				19,
+	EXIT:					20,
+	SIGNIN:					21,
 	
 	properties: {
 		0: {text: "bringToFront"},
@@ -48,7 +51,10 @@
 		15: {text: "checkVoiceMail"},
 		16: {text: "setPresence"},
 		17: {text: "im"},
-		18: {text: "startScreenShare"}
+		18: {text: "startScreenShare"},
+		19: {text: "signOut"},
+		20: {text: "exit"},
+		21: {text: "signIn"}
 	}
 };
 
